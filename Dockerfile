@@ -5,8 +5,6 @@ ARG HELM_VERSION=v3.1.0
 ENV HELM_FILENAME=helm-${HELM_VERSION}-linux-amd64.tar.gz
 
 
-COPY --from=static-docker-source /usr/local/bin/docker /usr/local/bin/docker
-
 
 RUN apk add --no-cache ca-certificates bash git openssh curl jq bind-tools \
  && curl -L  https://github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}/kind-$(uname)-amd64 >> /usr/local/bin/kind \
