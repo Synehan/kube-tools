@@ -29,9 +29,9 @@ jobs:
           context: .
           pull: true
           push: true
-          cache-from: type=registry,ref=zyrox94/test-image:latest
+          cache-from: type=registry,ref=renaultdigital/kube-tools:latest
           cache-to: type=inline
-          tags: zyrox94/test-image:latest
+          tags: renaultdigital/kube-tools:latest
           
       
 
