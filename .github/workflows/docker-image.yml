@@ -2,9 +2,8 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    tags:
+      - 'v*.*.*'
 
 jobs:
   push_to_registry:
@@ -13,25 +12,37 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
+      - name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-  
+
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
   
-      - name: Build and push
+      - name: Build and push the latest
         uses: docker/build-push-action@v2
         with:
           context: .
           pull: true
           push: true
-          cache-from: type=registry,ref=renaultdigital/kube-tools:latest
+          cache-from: type=registry,ref=zyrox94/test-image:latest
           cache-to: type=inline
-          tags: renaultdigital/kube-tools:latest
+          tags: zyrox94/test-image:latest
+      - name: Build and push with the tag
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          pull: true
+          push: true
+          cache-from: type=registry,ref=zyrox94/test-image:${{ env.RELEASE_VERSION }}
+          cache-to: type=inline
+          tags: zyrox94/test-image:latest
           
       
 
