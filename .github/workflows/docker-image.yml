@@ -42,7 +42,7 @@ jobs:
           push: true
           cache-from: type=registry,ref=zyrox94/test-image:${{ env.RELEASE_VERSION }}
           cache-to: type=inline
-          tags: zyrox94/test-image:latest
+          tags: zyrox94/test-image:${{ env.RELEASE_VERSION }}
           
       
 
