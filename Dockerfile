@@ -1,4 +1,4 @@
-FROM alpine:3
+FROM docker
 
 ARG KIND_VERSION=v0.7.0
 ARG HELM_VERSION=v3.1.0
